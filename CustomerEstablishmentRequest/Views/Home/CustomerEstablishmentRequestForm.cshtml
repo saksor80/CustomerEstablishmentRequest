@@ -1,0 +1,236 @@
+﻿@model IEnumerable<CustomerEstablishmentRequest.Models.CustomerEstablishmentRequestForm>
+<!-- Sets model to be used in this page -->
+@{
+    ViewData["Title"] = "Asiakkaanperustamispyyntölomake";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<hr />
+
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/CustomerEstablishmentRequestForm.css">   <!-- Sets ccs-stylesheet for this page -->
+</head>
+
+<form name="CustomerInformation" asp-controller="Home" asp-action="CustomerEstablishmentRequestResult" method="post" onsubmit="return ValidateForm()">  <!-- Form where biller answers to Customer establishment request -->
+    <table class="tg">  <!-- This table shows request information on top of the page -->
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>
+                    Pyyntötunnus: @Html.DisplayFor(modelItem => item.RequestID)
+                </th>
+                <th>
+                    Pyynnön Pvm: @Html.DisplayFor(modelItem => item.RequestDate)
+                </th>
+                <th>
+                    Pyynnön tila: @Html.DisplayFor(modelItem => item.RequestStatus)
+                </th>
+            </tr>
+        }
+    </table>
+
+    <br />
+
+    <table class="tg">  <!-- This table contains input for biller answer information -->
+        <tr>
+            <td rowspan="2">
+                <div>
+                    <label id="lblResult" class="label1">Vastaus pyyntöön:</label>
+                    <select id="txtResult" name="txtResult" class="textbox6" tabindex="1" onchange="return ChooseInput()">
+                        <option value="" disabled selected></option>
+                        <option value="Käsitelty">Hyväksytty</option>
+                        <option value="Odottaa">Lisätietoja tarvitaan</option>
+                        <option value="Hylätty">Hylätty</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="label1">Asiakastunnus:</label>
+                    <input id="txtCustomerID" name="txtCustomerID" type="text" class="textbox6" maxlenght="10" tabindex="2" disabled="disabled" />
+                </div>
+                <div>
+                    <label class="label3">Selite:</label>
+                    <textarea id="txtComment" Name="txtComment" rows="3" cols="40" class="textbox7" maxlenght="250" style="resize:none" tabindex="3" disabled="disabled"></textarea>
+                </div>
+                <div>
+                    <label class="label4"></label>
+                    <input id="Submit1" type="submit" value="Käsittele pyyntö" class="css_button" tabindex="4" />
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <br />
+
+    <table class="tg">  <!-- This table contains Customer information that biller checks before answering the request -->
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th class="tg-yw4l">
+                    <div class="div">
+                        <label class="label1">Nimi:</label>
+                        @Html.TextBoxFor(modelItem => item.Name, new { id = "txtName", @class = "textbox1", disabled = "disabled" })
+                    </div>
+                    <div class="div">
+                        <label class="label1">Y-tunnus:</label>
+                        @Html.TextBoxFor(modelItem => item.BusinessID, new { id = "txtBusinessID", @class = "textbox1", disabled = "disabled" })
+                    </div>
+                    <div class="div">
+                        <label class="label1">Osoite:</label>
+                        @Html.TextBoxFor(modelItem => item.Address, new { @class = "textbox1", disabled = "disabled" })
+                    </div>
+                    <div class="div">
+                        <label class="label1">Postinumero:</label>
+                        @Html.TextBoxFor(modelItem => item.ZipCode, new { @class = "textbox1", disabled = "disabled" })
+                    </div>
+                    <div class="div">
+                        <label class="label1">Postitoimipaikka:</label>
+                        @Html.TextBoxFor(modelItem => item.City, new { @class = "textbox1", disabled = "disabled" })
+                    </div>
+                    <div class="div">
+                        <label class="label1">Maakoodi:</label>
+                        @Html.TextBoxFor(modelItem => item.CountryCode, new { @class = "textbox1", disabled = "disabled" })
+                    </div>
+                    <div class="div">
+                        <label class="label1">Puhelin:</label>
+                        @Html.TextBoxFor(modelItem => item.Phone, new { @class = "textbox1", disabled = "disabled" })
+                    </div>
+                    <div class="div">
+                        <label class="label1">Sähköposti:</label>
+                        @Html.TextBoxFor(modelItem => item.CustomerEmail, new { @class = "textbox5", disabled = "disabled" })
+                    </div>
+                </th>
+                <th class="tg-yw4l" rowspan="2">
+                    <div class="div">
+                        <label id="12" class="label1">Laskutustapa:</label>
+                        @Html.TextBoxFor(modelItem => item.BillingMethod, new { @class = "textbox1", disabled = "disabled" })
+                    </div>
+                    <div class="div">
+                        <label id="13" class="label1">Laskutusväli:</label>
+                        @Html.TextBoxFor(modelItem => item.BillingCycle, new { @class = "textbox1", disabled = "disabled" })
+                    </div>
+                    <div class="div">
+                        <label id="14" class="label1">Maksuehto:</label>
+                        @Html.TextBoxFor(modelItem => item.PaymentCondition, new { @class = "textbox1", disabled = "disabled" })
+                    </div>
+                    <br />
+                    <hr />
+                    <div>
+                        <input type="checkbox" id="c1" name="cc" tabindex="15" class="checkbox" disabled="disabled" />
+                        <label class="label2" for="c1">Verkkolasku:</label>
+                    </div>
+                    <br />
+                    <div class="div">
+                        <label class="label1">OVT-tunnus:</label>
+                        @Html.TextBoxFor(modelItem => item.OvtID, new { @class = "textbox1", disabled = "disabled", id = "txtOvtID" })
+                    </div>
+                    <div class="div">
+                        <label class="label1">Verkkolaskuosoite:</label>
+                        @Html.TextBoxFor(modelItem => item.EinvoiceAddress, new { @class = "textbox1", disabled = "disabled" })
+                    </div>
+                    <div class="div">
+                        <label class="label1">Operaattori:</label>
+                        @Html.TextBoxFor(modelItem => item.EinvoiceOperator, new { @class = "textbox1", disabled = "disabled" })
+                    </div>
+                    <div class="div">
+                        <label class="label1">Operaattoritunnus:</label>
+                        @Html.TextBoxFor(modelItem => item.EinvoiceOperatorID, new { @class = "textbox1", disabled = "disabled" })
+                    </div>
+                    <hr />
+                    @Html.TextBoxFor(modelItem => item.RequestID, new { id = "RequestID", hidden = "hidden" })
+                    @Html.TextBoxFor(modelItem => item.RequestDate, new { id = "txtRequestDate", hidden = "hidden" })
+                    <input id="RequestID2" name="ID" value="" type="text" hidden />
+                    <input id="txtVendor2" name="txtVendor" value="" type="text" hidden />
+                    <input id="txtVendorEmail2" name="txtVendorEmail" value="" type="text" hidden />
+                    <input id="txtRequestDate2" name="txtRequestDate" value="" type="text" hidden />
+                    <input id="txtName2" name="txtName" value="" type="text" hidden />
+                    <input id="txtBusinessID2" name="txtBusinessID" value="" type="text" hidden />
+                </th>
+            </tr>
+            <tr>
+                <td class="tg-yw4l">
+                    <div class="div">
+                        <label class="label1">Myyjä:</label>
+                        @Html.TextBoxFor(modelItem => item.Vendor, new { @class = "textbox1", id = "txtVendor", disabled = "disabled" })
+                    </div>
+                    <div class="div">
+                        <label class="label1">Sähköposti:</label>
+                        @Html.TextBoxFor(modelItem => item.VendorEmail, new { @class = "textbox1", id= "txtVendorEmail", disabled = "disabled" })
+                    </div>
+                    <div class="div">
+                        <label id="10" class="label1">Hinnastotunnus:</label>
+                        @Html.TextBoxFor(modelItem => item.PriceList, new { @class = "textbox1", disabled = "disabled" })
+                    </div>
+                    <div class="div">
+                        <label id="11" class="label1">Asiakastyyppi:</label>
+                        @Html.TextBoxFor(modelItem => item.CustomerType, new { @class = "textbox5", disabled = "disabled" })
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+</form>
+
+<script>
+
+    window.onload = function () {   //Execute following lines when the page is loaded
+        if (document.getElementById('txtOvtID').innerHTML != "") { $('#c1').attr('checked', 'checked'); } //If txtOvtID value is not empty checks c1 checkbox
+        document.getElementById('RequestID2').value = document.getElementById('RequestID').value                       //
+        document.getElementById('txtVendor2').value = document.getElementById('txtVendor').value                //    
+        document.getElementById('txtVendorEmail2').value = document.getElementById('txtVendorEmail').value     //
+        document.getElementById('txtRequestDate2').value = document.getElementById('txtRequestDate').value    //
+        document.getElementById('txtName2').value = document.getElementById('txtName').value                 //
+        document.getElementById('txtBusinessID2').value = document.getElementById('txtBusinessID').value    //Passes form information(Customer information) when form is submitted forward
+    }
+
+    function ChooseInput() {    //Chooses what inputs are used, depends on which value is selected from txtResult-selectbox
+
+        var s = document.getElementById('txtResult');   //
+        var item1 = s.options[s.selectedIndex].value;   //Sets txtResult-selectbox selected value to a variable item1
+
+        if (item1 == 'Käsitelty') {
+            document.getElementById('txtComment').value = "";       //Sets empty for txtComment value
+            document.getElementById('txtComment').disabled = true;  //Disables txtComment
+            $('#txtCustomerID').removeAttr('disabled');             //Removes txtCustomerID inputbox disabled attribute
+            document.getElementById('txtCustomerID').value = "Anna asiakastunnus"; //Sets txtCustomerID inputbox default value
+            document.getElementById('txtCustomerID').focus();   //Sets focus to txtCustomerID inputbox
+            document.getElementById('txtCustomerID').select();  //Selects the default value text
+        }
+        if (item1 == 'Odottaa')  {
+            document.getElementById('txtCustomerID').value = "";    //Sets empty for txtCustomerID value
+            document.getElementById('txtCustomerID').disabled = true;   //Disables txtCustomerID
+            $('#txtComment').removeAttr('disabled');    //Removes txtComment inputbox disabled attribute
+            document.getElementById('txtComment').value = "Pyydä lisätietoja";  //Sets txtComment inputbox default value
+            document.getElementById('txtComment').focus();  //Sets focus to txtComment inputbox
+            document.getElementById('txtComment').select(); //Selects the default value text
+        }
+        if (item1 == 'Hylätty') {
+            document.getElementById('txtCustomerID').value = "";    //Sets empty for txtCustomerID value
+            document.getElementById('txtCustomerID').disabled = true;   //Disables txtCustomerID
+            $('#txtComment').removeAttr('disabled');    //Removes txtComment inputbox disabled attribute
+            document.getElementById('txtComment').value = "Ilmoita hylkäyksen syy"; //Sets txtComment inputbox default value
+            document.getElementById('txtComment').focus();  //Sets focus to txtComment inputbox
+            document.getElementById('txtComment').select(); //Selects the default value text
+        }
+    }
+
+    function ValidateForm() {   //Checks that form is filled correctly
+
+        var s = document.getElementById('txtResult');    //
+        var item1 = s.options[s.selectedIndex].value;   //Sets txtResult-selectbox selected value to a variable item1
+
+        if (item1 == '') {  //If variable item1 is empty, show error message and return false for form submit
+            alert('Lomake on tyhjä, tietoja ei voida käsitellä!')
+            return false;
+        }
+        if (item1 == 'Käsitelty' && document.getElementById('txtCustomerID').value == "" || document.getElementById('txtCustomerID').value == "Anna asiakastunnus") {   //If variable item1 is Handled, but txtCustomerID is missing or txtCustomerID has it's default value, show error message and return false for form submit
+            alert('Asiakastunnus on pakollinen tieto. Ole hyvä ja anna asiakastunnus!')
+            return false;
+        }
+        if ((item1 == 'Odottaa' || item1 == 'Hylätty') && (document.getElementById('txtComment').value == "" || document.getElementById('txtComment').value == "Pyydä lisätietoja" || document.getElementById('txtComment').value == "Ilmoita hylkäyksen syy")) { //If variable item1 is Rejected, but txtComment is missing or txtComment has it's default value, show error message and return false for form submit
+            alert('Selite on pakollinen tieto. Ole hyvä ja anna selite!')
+            return false;
+        }
+    }
+
+</script>

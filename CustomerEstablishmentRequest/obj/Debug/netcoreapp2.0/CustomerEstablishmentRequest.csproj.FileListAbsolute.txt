@@ -1,0 +1,11 @@
+C:\Users\sakus\source\repos\CustomerEstablishmentRequest\CustomerEstablishmentRequest\bin\Debug\netcoreapp2.0\CustomerEstablishmentRequest.deps.json
+C:\Users\sakus\source\repos\CustomerEstablishmentRequest\CustomerEstablishmentRequest\bin\Debug\netcoreapp2.0\CustomerEstablishmentRequest.runtimeconfig.json
+C:\Users\sakus\source\repos\CustomerEstablishmentRequest\CustomerEstablishmentRequest\bin\Debug\netcoreapp2.0\CustomerEstablishmentRequest.runtimeconfig.dev.json
+C:\Users\sakus\source\repos\CustomerEstablishmentRequest\CustomerEstablishmentRequest\bin\Debug\netcoreapp2.0\CustomerEstablishmentRequest.dll
+C:\Users\sakus\source\repos\CustomerEstablishmentRequest\CustomerEstablishmentRequest\bin\Debug\netcoreapp2.0\CustomerEstablishmentRequest.pdb
+C:\Users\sakus\source\repos\CustomerEstablishmentRequest\CustomerEstablishmentRequest\obj\Debug\netcoreapp2.0\CustomerEstablishmentRequest.csprojResolveAssemblyReference.cache
+C:\Users\sakus\source\repos\CustomerEstablishmentRequest\CustomerEstablishmentRequest\obj\Debug\netcoreapp2.0\CustomerEstablishmentRequest.csproj.CoreCompileInputs.cache
+C:\Users\sakus\source\repos\CustomerEstablishmentRequest\CustomerEstablishmentRequest\obj\Debug\netcoreapp2.0\CustomerEstablishmentRequest.AssemblyInfoInputs.cache
+C:\Users\sakus\source\repos\CustomerEstablishmentRequest\CustomerEstablishmentRequest\obj\Debug\netcoreapp2.0\CustomerEstablishmentRequest.AssemblyInfo.cs
+C:\Users\sakus\source\repos\CustomerEstablishmentRequest\CustomerEstablishmentRequest\obj\Debug\netcoreapp2.0\CustomerEstablishmentRequest.dll
+C:\Users\sakus\source\repos\CustomerEstablishmentRequest\CustomerEstablishmentRequest\obj\Debug\netcoreapp2.0\CustomerEstablishmentRequest.pdb

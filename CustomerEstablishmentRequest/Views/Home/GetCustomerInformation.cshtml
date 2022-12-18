@@ -1,0 +1,62 @@
+﻿@model IEnumerable<CustomerEstablishmentRequest.Models.GetCustomerInformation>
+<!-- Sets model to be used in this page -->
+@{
+    ViewData["Title"] = "Asiakkaanperustamispyyntölista";
+}
+<h2>@ViewData["Title"]</h2>
+
+<hr />
+
+<head>
+<link rel="stylesheet" type="text/css" href="~/css/GetCustomerInformation.css"> <!-- Sets ccs-stylesheet for this page -->
+</head> 
+
+<form name="CustomerList" asp-controller="Home" asp-action="CustomerEstablishmentRequestForm" method="post">    <!-- Form where user chooses Request and opens it for checkup -->
+    <table class="gci"> <!-- This table shows requests -->
+        <tr>    <!-- Captions -->
+            <th>
+                Pyyntötunnus
+            </th>
+            <th>
+                Pyytäjän nimi
+            </th>
+            <th>
+                Pyynnön Pvm
+            </th>
+            <th>
+                Pyynnön tila
+            </th>
+            <th>
+                Asiakkaan nimi
+            </th>
+            <th>
+                Pyynnön valinta
+            </th>
+        </tr>
+
+        @foreach (var item in Model)    
+        {
+            <tr onclick="var ID = ($(this).find('td:first').text().trim()); document.getElementById('ID').value = ID;"> <!-- Gets request RequestID from selected row -->
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vendor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td style="text-align:center">
+                    <input id="Button1" type="submit" value="Valitse pyyntö" class="css_button2" /> <!-- Submits the form and passes RequestID to controller for Sql query -->
+                </td>
+            </tr>
+        }
+    </table>
+    <input id="ID" name="ID" type="text" hidden />
+</form>

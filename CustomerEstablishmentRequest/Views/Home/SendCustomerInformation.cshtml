@@ -1,0 +1,334 @@
+﻿@model IEnumerable<CustomerEstablishmentRequest.Models.Input>
+
+@{
+    ViewData["Title"] = "Asiakastietolomake";
+}
+<h2>@ViewData["Title"]</h2>
+
+<hr />
+
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/SendCustomerInformation.css">    <!-- Sets ccs-stylesheet for this page -->
+</head>
+
+<form name="CustomerInformation" asp-controller="Home" asp-action="SendCustomerInformationForm" onsubmit="return ValidateEmpty()" method="post">
+    <!-- Form where vendor sends customer establishment request containing customer information -->
+    <table class="tg">
+        <tr>
+            <th class="tg-yw4l">
+                <div class="div">
+                    <label class="label1">Nimi:</label>
+                    <input id="txtName" name="txtName" type="text" class="textbox1" maxlength="30" tabindex="1" />
+                </div>
+                <div class="div">
+                    <label class="label1">Y-tunnus:</label>
+                    <input id="txtBusinessID" name="txtBusinessID" type="text" class="textbox1" maxlength="9" tabindex="2" />
+                </div>
+                <div class="div">
+                    <label class="label1">Osoite:</label>
+                    <input id="txtAddress" name="txtAddress" type="text" class="textbox1" maxlength="30" tabindex="3" />
+                </div>
+                <div class="div">
+                    <label class="label1">Postinumero:</label>
+                    <input id="txtZipCode" name="txtZipCode" type="text" class="textbox2" maxlength="5" tabindex="4" />
+                </div>
+                <div class="div">
+                    <label class="label1">Postitoimipaikka:</label>
+                    <input id="txtCity" name="txtCity" type="text" style="text-transform:uppercase" class="textbox1" maxlength="30" tabindex="5" />
+                </div>
+                <div class="div">
+                    <label class="label1">Maakoodi:</label>
+                    <input id="txtCountryCode" name="txtCountryCode" type="text" class="textbox3" maxlength="3" tabindex="6" />
+                </div>
+                <div class="div">
+                    <label class="label1">Puhelin:</label>
+                    <input id="txtPhone" name="txtPhone" type="text" class="textbox1" maxlength="20" tabindex="7" />
+                </div>
+                <div class="div">
+                    <label class="label1">Sähköposti:</label>
+                    <input id="txtCustomerEmail" name="txtCustomerEmail" type="text" class="textbox5" maxlength="30" tabindex="8" />
+                </div>
+            </th>
+            <th class="tg-yw4l" rowspan="2">
+                <div class="div">
+                    <label id="lblBillingMethod" class="label1">Laskutustapa:</label>
+                    <select id="slcBillingMethod" name="slcBillingMethod" class="textbox4" tabindex="13" onchange="ChangeLabelColorAndCaption('lblBillingMethod')">
+                        <!-- Input onchange calls ChangeLabelColorAndCaption function to change caption and it's color back to normal  -->
+                        <option value="" disabled selected></option>
+                        <option value="Projektilasku">Projektilasku</option>
+                        <option value="Koontilasku">Koontilasku</option>
+                    </select>
+                </div>
+                <div class="div">
+                    <label id="lblBillingCycle" class="label1">Laskutusväli:</label>
+                    <select id="slcBillingCycle" name="slcBillingCycle" class="textbox4" tabindex="14" onchange="ChangeLabelColorAndCaption('lblBillingCycle')">
+                        <!-- Input onchange calls ChangeLabelColorAndCaption function to change caption and it's color back to normal  -->
+                        <option value="" disabled selected></option>
+                        <option value="Viikottain">Viikottain</option>
+                        <option value="Kahden viikon välein">Kahden viikon välein</option>
+                        <option value="Kuukausittain">Kuukausittain</option>
+                    </select>
+                </div>
+                <div class="div">
+                    <label id="lblPaymentCondition" class="label1">Maksuehto:</label>
+                    <select id="slcPaymentCondition" name="slcPaymentCondition" class="textbox4" tabindex="15" onchange="ChangeLabelColorAndCaption('lblPaymentCondition')">
+                        <!-- Input onchange calls ChangeLabelColorAndCaption function to change caption and it's color back to normal  -->
+                        <option value="" disabled selected></option>
+                        <option value="14 pv netto">14 pv netto</option>
+                        <option value="21 pv netto">21 pv netto</option>
+                        <option value="30 pv netto">30 pv netto</option>
+                    </select>
+                </div>
+                <br />
+                <hr />
+                <script type="text/javascript">
+                    function Enable(bEnable, txt1, txt2, txt3, txt4) {   //Function that Enables elements
+                        document.getElementById(txt1).disabled = !bEnable
+                        document.getElementById(txt1).focus()
+                        document.getElementById(txt2).disabled = !bEnable
+                        document.getElementById(txt3).disabled = !bEnable
+                        document.getElementById(txt4).disabled = !bEnable
+                    }
+                </script>
+                <div>
+                    <input type="checkbox" id="c1" name="cc" tabindex="16" class="checkbox" onclick="Enable(this.checked, 'txtOvtID','txtEinvoiceAddress','txtEinvoiceOperator','txtEinvoiceOperatorID')" /> <!-- Checkbox onclick calls Enable function to enable Einvoice input boxes  -->
+                    <label class="label2" for="c1">Verkkolasku:</label>
+                </div>
+                <br />
+                <div class="div">
+                    <label class="label1">OVT-tunnus:</label>
+                    <input id="txtOvtID" value="" name="txtOvtID" type="text" class="textbox1" maxlength="17" tabindex="17" disabled="disabled" />
+                </div>
+                <div class="div">
+                    <label class="label1">Verkkolaskuosoite:</label>
+                    <input id="txtEinvoiceAddress" value="" name="txtEinvoiceAddress" type="text" class="textbox1" maxlength="20" tabindex="18" disabled="disabled" />
+                </div>
+                <div class="div">
+                    <label class="label1">Operaattori:</label>
+                    <input id="txtEinvoiceOperator" value="" name="txtEinvoiceOperator" type="text" class="textbox1" maxlength="20" tabindex="19" disabled="disabled" />
+                </div>
+                <div class="div">
+                    <label class="label1">Operaattoritunnus:</label>
+                    <input id="txtEinvoiceOperatorID" value="" name="txtEinvoiceOperatorID" type="text" class="textbox1" maxlength="8" tabindex="20" disabled="disabled" />
+                </div>
+                <hr />
+                <div align="right">
+                    <input id="Submit1" type="submit" value="Lähetä pyyntölistalle" class="css_button" tabindex="21" />
+                </div>
+            </th>
+        </tr>
+        <tr>
+            <td class="tg-yw4l">
+                <div class="div">
+                    <label class="label1">Myyjä:</label>
+                    <input id="txtVendor" name="txtVendor" type="text" class="textbox1" maxlength="10" tabindex="9" />
+                </div>
+                <div class="div">
+                    <label class="label1">Sähköposti:</label>
+                    <input id="txtVendorEmail" name="txtVendorEmail" type="text" class="textbox1" maxlength="30" tabindex="10" />
+                </div>
+                <script>
+                    function ChangeLabelColorAndCaption(txt1) { //Function that changes Captions and it's color back to normal
+                        document.getElementById(txt1).style.color = "black"
+                        if (txt1 == "lblPriceList") { document.getElementById(txt1).innerHTML = 'Hinnastotunnus:'; }
+                        if (txt1 == "lblCustomerType") { document.getElementById(txt1).innerHTML = 'Asiakastyyppi:'; }
+                        if (txt1 == "lblBillingMethod") { document.getElementById(txt1).innerHTML = 'Laskutustapa:'; }
+                        if (txt1 == "lblBillingCycle") { document.getElementById(txt1).innerHTML = 'Laskutusväli:'; }
+                        if (txt1 == "lblPaymentCondition") { document.getElementById(txt1).innerHTML = 'Maksuehto:'; }
+                    }
+                </script>
+                <div class="div">
+                    <label id="lblPriceList" class="label1">Hinnastotunnus:</label>
+                    <input id="txtPriceList" name="txtPriceList" type="text" class="textbox1" maxlength="10" tabindex="11" onchange="ChangeLabelColorAndCaption('lblPriceList')" /> <!-- Input onchange calls ChangeLabelColorAndCaption function to change caption and it's color back to normal  -->
+                </div>
+                <div class="div">
+                    <label id="lblCustomerType" class="label1">Asiakastyyppi:</label>
+                    <select id="slcCustomerType" name="slcCustomerType" class="textbox5" tabindex="12" onchange="ChangeLabelColorAndCaption('lblCustomerType')">
+                        <!-- Input onchange calls ChangeLabelColorAndCaption function to change caption and it's color back to normal  -->
+                        <option value="" disabled selected></option>
+                        <option value="1">1 - Henkilötyyppi</option>
+                        <option value="2">2 - Asiakastyyppi</option>
+                        <option value="3">3 - Toimittajatyyppi</option>
+                    </select>
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<script>
+    window.onload = function () {   //Execute next lines when the page is loaded
+
+        $.ajax({    //Gets part of customer information from .json-file CustomerInformation
+            url: '/api/Input',
+            type: 'GET',
+            dataType: 'json',
+            error: function (input) {    //In error do nothing
+            },
+            success: function (input) {  //In success fill form input boxes with .json-file data
+
+                input = input[input.length - 1];
+                //console.log('success', input);
+                document.getElementById('txtName').value = input.Name;
+                document.getElementById('txtBusinessID').value = input.BusinessID;
+                document.getElementById('txtAddress').value = input.Address;
+                document.getElementById('txtZipCode').value = input.ZipCode;
+                document.getElementById('txtCity').value = input.City;
+                document.getElementById('txtCountryCode').value = input.CountryCode;
+                document.getElementById('txtPhone').value = input.Phone;
+                document.getElementById('txtCustomerEmail').value = input.CustomerEmail;
+                document.getElementById('txtVendor').value = input.Vendor;
+                document.getElementById('txtVendorEmail').value = input.VendorEmail;
+                
+            }
+        });
+
+        document.getElementById('txtPriceList').focus();    //Sets focus to first input box that user has to fill
+
+    }
+
+    function ValidateEmpty() {  //Checks that input boxes contains nessesary data
+
+        var errormessage = "";
+        var counter = 0;
+        var first = 0;
+        var last = 0;
+
+        if (document.getElementById('txtPriceList').value == "") {  //If txtPriceList is empty
+            errormessage += "Hinnastotunnus";   //Adds string to error message body
+            document.getElementById('lblPriceList').innerHTML = '*Hinnastotunnus:'; //Add asterisk to lblPricelist caption
+            document.getElementById('lblPriceList').style.color = "red";    //Sets lblPricelist caption color red
+            counter = counter + 1   //Increases counter
+            if (first == 0) {   //Checks is it first error
+                document.getElementById('txtPriceList').focus();    //If is sets focus to it
+                first = 1   //Marks it to be first
+            }
+            last = 1    //Sets value for last
+        }
+
+        if (document.getElementById('slcCustomerType').value == "") {
+            if (errormessage == "") {
+                errormessage += "Asiakastyyppi";
+                document.getElementById('lblCustomerType').innerHTML = '*Asiakastyyppi:';
+                document.getElementById('lblCustomerType').style.color = "red";
+                counter = counter + 1
+                if (first == 0) {
+                    document.getElementById('slcCustomerType').focus();
+                    first = 1
+                }
+                last = 2
+            } else {    //If is not first
+                errormessage += ", asiakastyyppi";  //Adds string to error message
+                document.getElementById('lblCustomerType').innerHTML = '*Asiakastyyppi:';   //Add asterisk to lblPricelist caption
+                document.getElementById('lblCustomerType').style.color = "red"; //Sets lblPricelist caption color red
+                counter = counter + 1   //Increases counter
+                if (first == 0) {   //Checks is it first error
+                    document.getElementById('slcCustomerType').focus(); //If is sets focus to it
+                    first = 1   //Marks it to be first
+                }
+                last = 2    //Sets value for last
+            }
+        }
+
+        if (document.getElementById('slcBillingMethod').value == "") {
+            if (errormessage == "") {
+                errormessage += "Laskutustapa";
+                document.getElementById('lblBillingMethod').innerHTML = '*Laskutustapa:';
+                document.getElementById('lblBillingMethod').style.color = "red";
+                counter = counter + 1
+                if (first == 0) {
+                    document.getElementById('slcBillingMethod').focus();
+                    first = 1
+                }
+                last = 3
+            } else {
+                errormessage += ", laskutustapa";
+                document.getElementById('lblBillingMethod').innerHTML = '*Laskutustapa:';
+                document.getElementById('lblBillingMethod').style.color = "red";
+                counter = counter + 1
+                if (first == 0) {
+                    document.getElementById('slcBillingMethod').focus();
+                    first = 1
+                }
+                last = 3
+            }
+        }
+
+        if (document.getElementById('slcBillingCycle').value == "") {
+            if (errormessage == "") {
+                errormessage += "Laskutusväli";
+                document.getElementById('lblBillingCycle').innerHTML = '*Laskutusväli:';
+                document.getElementById('lblBillingCycle').style.color = "red";
+                counter = counter + 1
+                if (first == 0) {
+                    document.getElementById('slcBillingCycle').focus();
+                    first = 1
+                }
+                last = 4
+            } else {
+                errormessage += ", laskutusväli";
+                document.getElementById('lblBillingCycle').innerHTML = '*Laskutusväli:';
+                document.getElementById('lblBillingCycle').style.color = "red";
+                counter = counter + 1
+                if (first == 0) {
+                    document.getElementById('slcBillingCycle').focus();
+                    first = 1
+                }
+                last = 4
+            }
+        }
+
+        if (document.getElementById('slcPaymentCondition').value == "") {
+            if (errormessage == "") {
+                errormessage += "Maksuehto";
+                document.getElementById('lblPaymentCondition').innerHTML = '*Maksuehto:';
+                document.getElementById('lblPaymentCondition').style.color = "red";
+                counter = counter + 1
+                if (first == 0) {
+                    document.getElementById('slcPaymentCondition').focus();
+                    first = 1
+                }
+                last = 5
+            } else {
+                errormessage += ", maksuehto";
+                document.getElementById('lblPaymentCondition').innerHTML = '*Maksuehto:';
+                document.getElementById('lblPaymentCondition').style.color = "red";
+                counter = counter + 1
+                if (first == 0) {
+                    document.getElementById('slcPaymentCondition').focus();
+                    first = 1
+                }
+                last = 5
+            }
+        }
+
+        //Manipulates error message text to be in correct written form
+
+        if (last == 2 && counter > 1) { //Replaces string in error message if last value is 2 and counter value is more than 1
+            errormessage = errormessage.replace(", asiakastyyppi", " ja asiakastyyppi")
+        }
+
+        if (last == 3 && counter > 1) {
+            errormessage = errormessage.replace(", laskutustapa", " ja laskutustapa")
+        }
+
+        if (last == 4 && counter > 1) {
+            errormessage = errormessage.replace(", laskutusväli", " ja laskutusväli")
+        }
+
+        if (last == 5 && counter > 1) {
+            errormessage = errormessage.replace(", maksuehto", " ja maksuehto")
+        }
+
+        if (errormessage != "" && counter == 1) {   //If errormessage is not empty and counter is 1
+            errormessage += " on pakollinen tieto.\n\nOle hyvä ja anna" + " " + errormessage.toLowerCase() + "!";   //Formats errormessage to be in correct written form(Singular)
+            alert(errormessage);    //Shows error message box
+            return false;   //Returns false for form submit
+        }
+        if (errormessage != "" && counter > 1) {    //If errormessage is not empty and counter is more than 1
+            errormessage += " ovat pakollisia tietoja.\n\nOle hyvä ja anna" + " " + errormessage.toLowerCase() + "!";   //Formats errormessage to be in correct written form(Plural)
+            alert(errormessage);    //Shows error message box
+            return false;   //Returns false for form submit
+        }
+    }
+</script>
